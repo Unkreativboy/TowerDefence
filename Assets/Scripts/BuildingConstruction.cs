@@ -4,9 +4,25 @@ using UnityEngine;
 
 public class BuildingConstruction : MonoBehaviour
 {
+
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    
+
+
     private ActionOnTimer actionOnTimer;
-    private float constructionTime;
     private BuildingTypeSO buildingType;
+    private BoxCollider2D boxCollider2D;
+    private BuildingTypeHolder buildingTypeHolder;
+    private Material constructionMaterial;
+
+
+    private void Awake()
+    {
+        boxCollider2D = GetComponent<BoxCollider2D>();
+        buildingTypeHolder = GetComponent<BuildingTypeHolder>();
+        constructionMaterial = spriteRenderer.material;
+    }
+
 
     public static BuildingConstruction Create(Vector3 position, BuildingTypeSO buildingType)
     {
@@ -14,19 +30,31 @@ public class BuildingConstruction : MonoBehaviour
         Transform buildingConstructionTransform = Instantiate(pfBuildingConstruction, position, Quaternion.identity);
 
         BuildingConstruction buildingConstruction = buildingConstructionTransform.GetComponent<BuildingConstruction>();
-        buildingConstruction.SetUp(2f, buildingType);
+        buildingConstruction.SetUpBuildingTypeAndStartTimer(buildingType);
 
         return buildingConstruction;
+    }
+    private void Update()
+    {
+        //Invert the GetCurrentTimeNormalized to start from 0 otherwise it would start at 1 and decline
+        constructionMaterial.SetFloat("_Progress", (actionOnTimer.GetCurrentTimeNormalized() - 1) * (-1));
+        
     }
 
 
 
-    private void SetUp(float constructionTime, BuildingTypeSO buildingType)
-    {
-        this.constructionTime = constructionTime;
-        this.buildingType = buildingType;
-        CreateActionOnTimer(constructionTime);
 
+    private void SetUpBuildingTypeAndStartTimer( BuildingTypeSO buildingType)
+    {
+        spriteRenderer.sprite = buildingType.sprite;
+
+        this.buildingType = buildingType;
+        CreateActionOnTimer(buildingType.constructionTime);
+
+        boxCollider2D.offset = buildingType.prefab.GetComponent<BoxCollider2D>().offset;
+        boxCollider2D.size = buildingType.prefab.GetComponent<BoxCollider2D>().size;
+        buildingTypeHolder.buildingType = buildingType;
+       
     }
 
     private void CreateActionOnTimer(float constructionTime)
@@ -37,6 +65,11 @@ public class BuildingConstruction : MonoBehaviour
             Instantiate(buildingType.prefab, transform.position, Quaternion.identity);
             Destroy(gameObject);
         });
+    }
+
+    public ActionOnTimer GetActionOnTimer()
+    {
+        return actionOnTimer;
     }
 
 

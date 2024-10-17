@@ -29,3 +29,4 @@ MonoBehaviour:
   - resourceType: {fileID: 11400000, guid: 9f4a8ae3329025a42948980c1fe24949, type: 2}
     amount: 10
   healthAmountMax: 100
+  constructionTime: 2

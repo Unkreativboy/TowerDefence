@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
+
+    public event EventHandler OnMouseOverBuilding;
+    public event EventHandler OnMouseExitOverBuilding;
+
     public static event EventHandler OnBuildingDestroyed;
     public static event EventHandler OnBuildingBuild;
 
@@ -32,6 +36,15 @@ public class Building : MonoBehaviour
     {
         OnBuildingDestroyed?.Invoke(this, EventArgs.Empty);
         Destroy(gameObject);
+    }
+
+    private void OnMouseEnter()
+    {
+        OnMouseOverBuilding?.Invoke(this, EventArgs.Empty);
+    }
+    private void OnMouseExit()
+    {
+        OnMouseExitOverBuilding?.Invoke(this, EventArgs.Empty);
     }
 
 

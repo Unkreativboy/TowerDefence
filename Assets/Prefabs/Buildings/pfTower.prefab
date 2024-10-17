@@ -224,6 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b27c448c9a7b1874ebdfdae1839891a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthAmountMax: 100
 --- !u!114 &-5475791709869004838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,6 +260,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5744991260831019502}
     m_Modifications:
+    - target: {fileID: 230611807580550241, guid: 45b00460cf8b31546aee694bb5c01771, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 230611807580550241, guid: 45b00460cf8b31546aee694bb5c01771, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 640217221421947097, guid: 45b00460cf8b31546aee694bb5c01771, type: 3}
       propertyPath: healthSystem
       value: 
@@ -283,6 +292,10 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5280643545506919210, guid: 45b00460cf8b31546aee694bb5c01771, type: 3}
+      propertyPath: building
+      value: 
+      objectReference: {fileID: -5475791709869004838}
     - target: {fileID: 6828184508317494912, guid: 45b00460cf8b31546aee694bb5c01771, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
