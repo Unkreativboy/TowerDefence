@@ -10,18 +10,17 @@ public class ArrowProjectile : MonoBehaviour
 
 
     private Enemy targetEnemy;
-    private Vector3 lastMoveDir;
+    private Vector3 targetEnemyPosition;
 
 
-    public static ArrowProjectile Create(Vector3 position, Enemy enemy)
+    public static ArrowProjectile Create(Vector3 position, Enemy enemy, Vector3 enemyPosition)
     {
         Transform pfArrow = Resources.Load<Transform>("pfArrowProjectile");
         Transform arrowTransform = Instantiate(pfArrow, position, Quaternion.identity);
 
         ArrowProjectile arrowProjectile = arrowTransform.GetComponent<ArrowProjectile>();
-        arrowProjectile.SetTarget(enemy);
+        arrowProjectile.SetTarget(enemy, enemyPosition);
         return arrowProjectile;
-
     }
 
 
@@ -34,21 +33,23 @@ public class ArrowProjectile : MonoBehaviour
             Vector3 moveDir = (targetEnemy.transform.position - transform.position).normalized;
             transform.position += moveDir * Time.deltaTime * moveSpeed;
             transform.eulerAngles = new Vector3(0, 0, UtilsClass.GetAngleFromVector(moveDir));
-            lastMoveDir = moveDir;
         }
         else
         {
-            transform.position += lastMoveDir * Time.deltaTime * moveSpeed;
-            transform.eulerAngles = new Vector3(0, 0, UtilsClass.GetAngleFromVector(lastMoveDir));
+
+            Vector3 moveDir = (targetEnemyPosition - transform.position).normalized;
+            transform.position += moveDir * Time.deltaTime * moveSpeed;
+            transform.eulerAngles = new Vector3(0, 0, UtilsClass.GetAngleFromVector(moveDir));
             Destroy(gameObject,2f);
         }
 
 
     }
 
-    private void SetTarget(Enemy targetEnemy, Vector3 transformPosition)
+    private void SetTarget(Enemy targetEnemy, Vector3 enemyPosition)
     {
         this.targetEnemy = targetEnemy;
+        targetEnemyPosition = enemyPosition;
     }
 
 

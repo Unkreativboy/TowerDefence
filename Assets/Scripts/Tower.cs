@@ -46,7 +46,15 @@ public class Tower : MonoBehaviour
     
         attackDelayTimer.SetTimer(attackSpeed, () => 
         {
-            ArrowProjectile.Create(projectileSpawnPosition.position, targetEnemy);
+            if(targetEnemy == null)
+            {
+                LookForClosesTarget() ; 
+                
+            }
+            if(targetEnemy != null)
+            {
+                ArrowProjectile.Create(projectileSpawnPosition.position, targetEnemy, targetEnemy.transform.position);
+            }
             readyToAttack = true; 
 
         }, false);
