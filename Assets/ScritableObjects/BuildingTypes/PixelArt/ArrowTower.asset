@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb8e5fe3cee97c748806730d28e29682, type: 3}
+  m_Name: ArrowTower
+  m_EditorClassIdentifier: 
+  nameString: Tower
+  prefab: {fileID: 5744991260831019502, guid: 7a188afa962bdf046bb7467e9eca4e7b, type: 3}
+  resourceGeneratorData: []
+  sprite: {fileID: 1606649045, guid: 6d470d200da8ff8448247a499823e827, type: 3}
+  minConstructionRadius: 7
+  constructionResourceCostArray:
+  - resourceType: {fileID: 11400000, guid: 9f4a8ae3329025a42948980c1fe24949, type: 2}
+    amount: 40
+  - resourceType: {fileID: 11400000, guid: 08b980014e4dc4a4ea10c0383efa6169, type: 2}
+    amount: 30
+  healthAmountMax: 70
+  constructionTime: 5

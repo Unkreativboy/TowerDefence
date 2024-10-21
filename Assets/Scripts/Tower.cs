@@ -1,9 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
+    public event EventHandler<OnTargetSetEventEventArgs> OnTargetSetEvent;
+
+
+    public class OnTargetSetEventEventArgs : EventArgs
+    {
+        public Enemy targetEnemy;
+    }
+
+
     private Enemy targetEnemy;
     [SerializeField] private float attackRange;
     [SerializeField] private float attackSpeed;
@@ -16,36 +26,53 @@ public class Tower : MonoBehaviour
     private void Awake()
     {
         attackDelayTimer = gameObject.AddComponent<ActionOnTimer>();
-
-
     }
 
 
     private void Update()
     {
         if (!readyToAttack) return;
-        LookForTargets();
+        LookForClosesTarget();
         if (targetEnemy == null) return;
         Attack();
 
         
     }
 
-
-    private void SetAttackDelayTimer()
-    {
-        attackDelayTimer.SetTimer(attackSpeed, () => { readyToAttack = true; }, false);
-    }
-    
-
     private void Attack()
     {
-        ArrowProjectile.Create(projectileSpawnPosition.position, targetEnemy);
+        
         readyToAttack = false;
-        SetAttackDelayTimer();
+    
+        attackDelayTimer.SetTimer(attackSpeed, () => 
+        {
+            ArrowProjectile.Create(projectileSpawnPosition.position, targetEnemy);
+            readyToAttack = true; 
+
+        }, false);
     }
 
 
+    private void LookForClosesTarget()
+    {
+        Enemy enemy = EnemyManager.Instance.GetClosestEnemy(transform.position);
+        if (enemy != null)
+        {
+            if (Vector3.Distance(transform.position, enemy.transform.position) < attackRange)
+            {
+                targetEnemy = enemy;
+            }
+        }
+        OnTargetSetEvent?.Invoke(this, new OnTargetSetEventEventArgs { targetEnemy = targetEnemy });
+    }
+    public ActionOnTimer GetAttackTimer()
+    {
+        return attackDelayTimer;
+    }
+
+
+
+    //old one not in use
     private void LookForTargets()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, attackRange);

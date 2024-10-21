@@ -19,6 +19,15 @@ public class ActionOnTimer : MonoBehaviour
         get { return currentTime; }
     }
 
+    public void AddTimerCallback(Action timerCallback)
+    {
+        this.timerCallback += timerCallback;
+    }
+    public void DeleteTimerCallback(Action timerCallback)
+    {
+        this.timerCallback -= timerCallback;
+    }
+
 
     public void SetTimer(float timeAfterActionIsCalled, Action timerCallback, bool isTimerRepeating = false)
     {

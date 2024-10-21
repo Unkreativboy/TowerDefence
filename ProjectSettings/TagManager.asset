@@ -44,6 +44,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Army
+    uniqueID: 402664681
+    locked: 0
   - name: Resource Nodes
     uniqueID: 1152870463
     locked: 0

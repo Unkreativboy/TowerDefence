@@ -82,7 +82,7 @@ public class Enemy : MonoBehaviour
         if (building != null)
         {
             IDamageable damageable = building.GetComponent<IDamageable>();
-            damageable.Damage(100);
+            damageable.Damage(10);
             Destroy(gameObject);
         }
     }
